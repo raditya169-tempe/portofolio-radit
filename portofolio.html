@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raditya — Software Developer</title>
+<meta name="description" content="Portofolio Raditya, software developer yang membangun produk web dan backend.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #10151c;
+    --surface: #161c26;
+    --surface-2: #1c2430;
+    --line: #2a3441;
+    --text: #e6edf3;
+    --muted: #8b98a5;
+    --accent: #5eead4;
+    --accent-dim: #3a8f83;
+    --amber: #f0b429;
+    --red: #ff6b6b;
+    --radius: 10px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--accent); color:#0a0e13; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; font-weight:600; letter-spacing:-0.01em; }
+
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  img, svg{ display:block; max-width:100%; }
+
+  :focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(16,21,28,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:60px;
+  }
+  .logo{ font-family:'JetBrains Mono', monospace; font-weight:600; font-size:0.95rem; color:var(--text); }
+  .logo span{ color:var(--accent); }
+  .navlinks{ display:flex; gap:28px; font-size:0.88rem; color:var(--muted); }
+  .navlinks a{ transition:color .15s ease; }
+  .navlinks a:hover{ color:var(--accent); }
+  .navlinks .num{ color:var(--accent-dim); margin-right:4px; }
+
+  /* ---------- HERO: EDITOR WINDOW ---------- */
+  header{ padding:64px 0 40px; }
+
+  .editor{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .editor-tabs{
+    display:flex; align-items:center;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--line);
+    padding:0 12px;
+  }
+  .dots{ display:flex; gap:7px; padding:14px 12px 14px 4px; }
+  .dots span{ width:11px; height:11px; border-radius:50%; }
+  .dots span:nth-child(1){ background:#ff5f57; }
+  .dots span:nth-child(2){ background:#febc2e; }
+  .dots span:nth-child(3){ background:#28c840; }
+  .tab{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.8rem;
+    color:var(--muted);
+    padding:14px 16px;
+    border-right:1px solid var(--line);
+  }
+  .tab.active{ color:var(--accent); border-bottom:2px solid var(--accent); background:var(--surface); }
+
+  .editor-body{
+    display:flex;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.92rem;
+    padding:28px 0;
+  }
+  .gutter{
+    color:#3a4452;
+    text-align:right;
+    padding:0 18px;
+    user-select:none;
+    flex-shrink:0;
+  }
+  .gutter div{ height:1.7em; }
+  .code{ padding-right:24px; flex:1; min-width:0; }
+  .code div{ height:1.7em; white-space:pre; overflow-x:auto; }
+  .kw{ color:#ff7b93; }
+  .fn{ color:var(--accent); }
+  .str{ color:var(--amber); }
+  .com{ color:var(--muted); }
+  .var{ color:#a5b4fc; }
+  .prop{ color:#7ee787; }
+
+  .cursor{
+    display:inline-block;
+    width:8px; height:1.1em;
+    background:var(--accent);
+    vertical-align:middle;
+    margin-left:2px;
+    animation: blink 1s step-end infinite;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cursor{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .hero-cta{
+    display:flex; gap:14px; margin-top:28px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.85rem;
+    padding:11px 20px;
+    border-radius:6px;
+    border:1px solid var(--line);
+    transition: all .15s ease;
+  }
+  .btn.primary{ background:var(--accent); color:#0a0e13; border-color:var(--accent); font-weight:600; }
+  .btn.primary:hover{ background:#7ff2e0; }
+  .btn.ghost{ color:var(--text); }
+  .btn.ghost:hover{ border-color:var(--accent); color:var(--accent); }
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{ padding:72px 0; border-top:1px solid var(--line); }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.8rem;
+    color:var(--accent-dim);
+    margin-bottom:10px;
+  }
+  .eyebrow .ln{ color:#3a4452; }
+  h2{ font-size:1.7rem; margin-bottom:32px; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:40px;
+    align-items:start;
+  }
+  .about p{ color:var(--muted); margin-bottom:14px; font-size:0.98rem; }
+  .about strong{ color:var(--text); font-weight:600; }
+
+  .stack-list{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .stack-cat{ margin-bottom:16px; }
+  .stack-cat:last-child{ margin-bottom:0; }
+  .stack-cat .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+  .stack-cat .label::before{ content:"// "; color:var(--accent-dim); }
+  .pill-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .pill{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    padding:5px 10px;
+    border-radius:5px;
+    color:var(--text);
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .projects{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:20px;
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .card:hover{ border-color:var(--accent-dim); transform:translateY(-2px); }
+  .card-file{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.82rem;
+    color:var(--accent);
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .card-file::before{ content:"📄"; filter:grayscale(1) brightness(1.6); font-size:0.9em; }
+  .card h3{ font-size:1.08rem; margin-bottom:8px; }
+  .card p{ color:var(--muted); font-size:0.9rem; margin-bottom:16px; flex:1; }
+  .card .tags{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  .card .tags span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    color:var(--accent-dim);
+    background:rgba(94,234,212,0.08);
+    padding:3px 8px;
+    border-radius:4px;
+  }
+  .card-links{ display:flex; gap:16px; font-size:0.85rem; }
+  .card-links a{ color:var(--muted); border-bottom:1px solid transparent; }
+  .card-links a:hover{ color:var(--accent); border-color:var(--accent); }
+
+  /* ---------- EXPERIENCE: GIT LOG ---------- */
+  .gitlog{ position:relative; padding-left:28px; }
+  .gitlog::before{
+    content:"";
+    position:absolute; left:5px; top:6px; bottom:6px;
+    width:1px; background:var(--line);
+  }
+  .commit{ position:relative; padding-bottom:32px; }
+  .commit:last-child{ padding-bottom:0; }
+  .commit::before{
+    content:"";
+    position:absolute; left:-28px; top:4px;
+    width:11px; height:11px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--accent);
+  }
+  .commit-hash{ font-family:'JetBrains Mono', monospace; font-size:0.78rem; color:var(--amber); }
+  .commit-role{ font-size:1.05rem; font-weight:600; margin:4px 0 2px; }
+  .commit-meta{ font-family:'JetBrains Mono', monospace; font-size:0.8rem; color:var(--muted); margin-bottom:10px; }
+  .commit p{ color:var(--muted); font-size:0.92rem; max-width:560px; }
+
+  /* ---------- CONTACT: TERMINAL ---------- */
+  .terminal{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.92rem;
+  }
+  .term-line{ margin-bottom:10px; }
+  .prompt{ color:var(--accent); }
+  .prompt::before{ content:"➜  "; color:var(--accent-dim); }
+  .term-out{ color:var(--muted); padding-left:22px; }
+  .contact-links{
+    display:flex; gap:24px; margin-top:20px; flex-wrap:wrap;
+    padding-left:22px;
+  }
+  .contact-links a{
+    color:var(--text);
+    font-size:0.92rem;
+    border-bottom:1px solid var(--line);
+    padding-bottom:2px;
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .contact-links a:hover{ color:var(--accent); border-color:var(--accent); }
+
+  footer{
+    padding:32px 0 48px;
+    text-align:center;
+    color:var(--muted);
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 720px){
+    .navlinks{ display:none; }
+    .about-grid{ grid-template-columns:1fr; }
+    .projects{ grid-template-columns:1fr; }
+    h2{ font-size:1.4rem; }
+    .editor-body{ font-size:0.78rem; }
+    .gutter{ padding:0 10px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">radit<span>.dev</span></div>
+    <div class="navlinks">
+      <a href="#about"><span class="num">01</span>Tentang</a>
+      <a href="#projects"><span class="num">02</span>Proyek</a>
+      <a href="#experience"><span class="num">03</span>Pengalaman</a>
+      <a href="#contact"><span class="num">04</span>Kontak</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="editor">
+      <div class="editor-tabs">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="tab active">about.js</div>
+      </div>
+      <div class="editor-body">
+        <div class="gutter">
+          <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div>
+        </div>
+        <div class="code">
+          <div><span class="kw">const</span> <span class="var">developer</span> = {</div>
+          <div>&nbsp;&nbsp;<span class="prop">name</span>: <span class="str">"Raditya"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="prop">role</span>: <span class="str">"Software Developer"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="prop">focus</span>: [<span class="str">"backend"</span>, <span class="str">"web"</span>, <span class="str">"tooling"</span>],</div>
+          <div>&nbsp;&nbsp;<span class="prop">basedIn</span>: <span class="str">"Indonesia"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="com">// membangun sistem yang rapi & scalable</span></div>
+          <div>};</div>
+          <div></div>
+          <div><span class="fn">deploy</span>(developer)<span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn primary">Lihat Proyek</a>
+      <a href="#contact" class="btn ghost">Hubungi Saya</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow"><span class="ln">L012</span> tentang.saya()</div>
+    <h2>Tentang</h2>
+    <div class="about-grid">
+      <div class="about">
+        <p>Saya <strong>Raditya</strong>, software developer yang senang mengubah masalah nyata jadi aplikasi yang jalan dengan mulus — dari desain API sampai antarmuka yang dipakai orang setiap hari.</p>
+        <p>Fokus utama saya di <strong>backend & arsitektur sistem</strong>, tapi cukup nyaman kerja full-stack ketika proyek membutuhkannya. Suka kode yang terbaca seperti prosa: jelas, jujur, dan mudah dirawat orang lain.</p>
+        <p>Di luar kerjaan, saya ikut proyek open-source dan senang belajar hal baru lewat side project kecil.</p>
+      </div>
+      <div class="stack-list">
+        <div class="stack-cat">
+          <div class="label">languages</div>
+          <div class="pill-row">
+            <span class="pill">JavaScript</span><span class="pill">TypeScript</span><span class="pill">Python</span><span class="pill">Go</span>
+          </div>
+        </div>
+        <div class="stack-cat">
+          <div class="label">frameworks</div>
+          <div class="pill-row">
+            <span class="pill">Node.js</span><span class="pill">React</span><span class="pill">Express</span><span class="pill">Django</span>
+          </div>
+        </div>
+        <div class="stack-cat">
+          <div class="label">tools</div>
+          <div class="pill-row">
+            <span class="pill">Docker</span><span class="pill">PostgreSQL</span><span class="pill">Git</span><span class="pill">AWS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow"><span class="ln">L048</span> ls ./proyek</div>
+    <h2>Proyek Pilihan</h2>
+    <div class="projects">
+
+      <div class="card">
+        <div class="card-file">proyek-satu.js</div>
+        <h3>Nama Proyek Satu</h3>
+        <p>Deskripsi singkat proyek: masalah yang diselesaikan, dan dampaknya. Ganti dengan proyek nyata kamu.</p>
+        <div class="tags"><span>React</span><span>Node.js</span><span>PostgreSQL</span></div>
+        <div class="card-links">
+          <a href="#">Live Demo →</a>
+          <a href="#">Kode Sumber →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-file">proyek-dua.py</div>
+        <h3>Nama Proyek Dua</h3>
+        <p>Deskripsi singkat proyek: teknologi yang dipakai dan alasan pendekatan yang diambil.</p>
+        <div class="tags"><span>Python</span><span>Django</span><span>Docker</span></div>
+        <div class="card-links">
+          <a href="#">Live Demo →</a>
+          <a href="#">Kode Sumber →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-file">proyek-tiga.go</div>
+        <h3>Nama Proyek Tiga</h3>
+        <p>Deskripsi singkat proyek: skala pengguna, performa, atau tantangan teknis yang menarik.</p>
+        <div class="tags"><span>Go</span><span>Redis</span><span>AWS</span></div>
+        <div class="card-links">
+          <a href="#">Live Demo →</a>
+          <a href="#">Kode Sumber →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-file">proyek-empat.ts</div>
+        <h3>Nama Proyek Empat</h3>
+        <p>Deskripsi singkat proyek: kontribusi open-source atau tools internal yang kamu bangun.</p>
+        <div class="tags"><span>TypeScript</span><span>Express</span></div>
+        <div class="card-links">
+          <a href="#">Live Demo →</a>
+          <a href="#">Kode Sumber →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow"><span class="ln">L096</span> git log --oneline</div>
+    <h2>Pengalaman</h2>
+    <div class="gitlog">
+
+      <div class="commit">
+        <div class="commit-hash">#a1b2c3d</div>
+        <div class="commit-role">Software Developer — Nama Perusahaan</div>
+        <div class="commit-meta">2023 — Sekarang</div>
+        <p>Membangun dan merawat layanan backend, berkolaborasi dengan tim produk untuk merilis fitur secara rutin.</p>
+      </div>
+
+      <div class="commit">
+        <div class="commit-hash">#e4f5g6h</div>
+        <div class="commit-role">Junior Developer</div>
+        <div class="commit-meta">2021 — 2023</div>
+        <p>Mengembangkan antarmuka web dan membantu proses migrasi sistem lama ke arsitektur baru.</p>
+      </div>
+
+      <div class="commit">
+        <div class="commit-hash">#i7j8k9l</div>
+        <div class="commit-role">Lulusan — SMP IT Wahana Bhakti</div>
+        <div class="commit-meta">2021</div>
+        <p>Teknik Informatika, dengan fokus pengembangan perangkat lunak dan struktur data.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow"><span class="ln">L142</span> hubungi.sh</div>
+    <h2>Kontak</h2>
+    <div class="terminal">
+      <div class="term-line"><span class="prompt">whoami</span></div>
+      <div class="term-out">Raditya — terbuka untuk kolaborasi & peluang baru</div>
+      <div class="term-line" style="margin-top:16px;"><span class="prompt">cat kontak.txt</span></div>
+      <div class="contact-links">
+        <a href="mailto:rangga@email.com">rangga@email.com</a>
+        <a href="https://github.com/username" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/username" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Raditya — dibangun dengan HTML &amp; CSS
+</footer>
+
+</body>
+  </html>
